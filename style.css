@@ -38,8 +38,7 @@ nav div{
 }
 .col{
 		display: flex;
-		flex-direction: column; 
-
+		flex-direction: column;
 }
 .cell{ 
 		text-align: center;
