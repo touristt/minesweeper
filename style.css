@@ -18,12 +18,37 @@ nav{
  	    flex-direction: row;
  	    justify-content: flex-start;
  	    align-items: center;
- 	    background:#468afa;
- 	    color: white;
+ 	    background:#0f894e;
+ 	    color: #ffd865;
  	    font-size: 25px;
  	    height: 40px;
 }	
 nav div{
 		padding: 10px;
+		padding-left: 25px;
 		letter-spacing: 2px;
+}
+#grid{
+		display: flex;
+		flex-direction: row;
+		margin-top: 20px;
+		-webkit-box-shadow: 0px 10px 16px 0px rgba(0,0,0,0.75);
+		-moz-box-shadow: 0px 10px 16px 0px rgba(0,0,0,0.75);
+		box-shadow: 0px 10px 16px 0px rgba(0,0,0,0.75);
+}
+.col{
+		display: flex;
+		flex-direction: column; 
+
+}
+.cell{ 
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+}
+section{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 }
