@@ -48,9 +48,12 @@ nav div{
 		cursor: pointer;
 		background: white;
 }
- 
+
 section{
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+}
+p{
+	font-weight: 800
 }
