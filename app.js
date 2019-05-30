@@ -129,3 +129,42 @@ function assignValues(gridArr,minesLocation,rows,cols) {
 	return gridArr 	
 }
 
+function uncover(gridArr,rows,cols,x,y) {
+	colors = ["#2196f3","#9c27b0","#3f51b5","#4caf50","#ff3d00","#ab9900","black","red"]
+	let queue = []
+	if (gridArr[x][y] == 0) {
+		gridArr[x][y] = -2
+		cells[x*rows + y].style.background = "#d7b899"  
+		queue.push([x,y])
+	}
+	else if (gridArr[x][y] !== 0 && gridArr[x][y] != -1  && gridArr[x][y] != -2){
+		cells[x*rows + y].innerHTML = `<p style="color:${colors[gridArr[x][y]-1]}">${gridArr[x][y]}</p>`
+
+		cells[x*rows + y].style.background = "#e5c29f"
+
+	}
+	else if(gridArr[x][y] == -1 && gridArr[x][y] != -2){
+		cells[x*rows + y].innerHTML = `<p style="color:red">&#10687</p>`
+		cells[x*rows + y].style.background = "#e5c29f"
+	}
+
+	while(queue.length){
+		currentCell = queue.shift()
+		for (var a = currentCell[0]-1; a <= currentCell[0]+1; a++) {
+		 	for (var b = currentCell[1]-1; b <= currentCell[1]+1; b++) {
+		 		if (a>= 0 && a < cols && b>=0 && b < rows && gridArr[a][b] == 0) {
+			 		gridArr[a][b] = -2 
+			 		cells[a*rows + b].style.background = "#d7b899"  
+			 		queue.push([a,b])
+			 	}
+			 	if (a>= 0 && a < cols && b>=0 && b < rows && gridArr[a][b] != 0 && gridArr[a][b] != -1  && gridArr[a][b] != -2) {
+			 		
+			 		cells[a*rows + b].style.background = "#e5c29f"
+			 		cells[a*rows + b].innerHTML = `<p style="color:${colors[gridArr[a][b]-1]}">${gridArr[a][b]}</p>`
+			 		//document.querySelector(`.cell:nth-of-type(${b*rows+a+1})`).innerHTML = 
+			 	}
+		 	}
+		}
+	}	
+	return gridArr
+}
