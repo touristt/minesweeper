@@ -5,8 +5,8 @@
 
 body {              
 		width:   100%;
-  		font-family:   'Montserrat', sans-serif;        
-		background:  
+  		font-family:   'Montserrat', sans-serif;   
+		user-select: none; 
 }
 #wrapper{
    		max-width:    100%;
