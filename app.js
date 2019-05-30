@@ -1,13 +1,23 @@
 let gridArr = []
-function drawGrid(difficulty, rows,cols) {
+let cells
+function drawGrid(gridArr, difficulty, rows,cols) {
 	let grid = document.querySelector("#grid")
 	grid.innerHTML = ""
 	for (var i = 0; i < cols; i++) {
-		grid.innerHTML += `<div class="col"></div>`
-		gridArr[i] = []
-		for (var j = 0; j < rows; j++) {
-			gridArr[i][j] = 0
-			document.querySelector(`.col:nth-of-type(${i+1})`).innerHTML += `<div class="cell"><p></p></div>`
+		grid.innerHTML += `<div class="col"></div>` 
+		for (var j = 0; j < rows; j++) { 
+				document.querySelector(`.col:nth-of-type(${i+1})`).innerHTML += `<div class="cell"><p></p></div>`
+			// if (gridArr[i][j] == -1 ) {
+			// 	document.querySelector(`.col:nth-of-type(${i+1})`).innerHTML += `<div class="cell"><p>&#10687</p></div>`
+			// }
+			// else if (gridArr[i][j] == 0) {
+			// 	document.querySelector(`.col:nth-of-type(${i+1})`).innerHTML += `<div class="cell"><p></p></div>`
+				
+			// }
+			// else{
+			// 	colors = ["#2196f3","#9c27b0","#3f51b5","#4caf50","#ff3d00","#ab9900"]
+			// 	document.querySelector(`.col:nth-of-type(${i+1})`).innerHTML += `<div class="cell" style="color:${colors[gridArr[i][j]-1]}"><p>${gridArr[i][j]}</p></div>`
+			// }
 		}
 	}
 	for (var i = 0; i < cols; i++) {
