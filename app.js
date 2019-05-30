@@ -37,43 +37,64 @@ function newGame(difficulty){
 	else 					  numberOfMines = 99, rows = 20, cols = 24
 	drawGrid(difficulty,rows,cols)
 	let mines = []
-	for (var i = 0; i < numberOfMines; i++) {
+	let minesLocation = []
+	for (let i = 0; i < numberOfMines; i++) {
 		pos = rand(rows,cols)
-		console.log(i,pos,isInMines(pos,mines)) 
 		while(isInMines(pos,mines)){
 			pos = rand(rows,cols)
-			console.log(i,pos,isInMines(pos,mines)) 
 		}
 		mines.push(pos)
 	}
-	for (var i = 0; i < mines.length; i++) {
+	for (let i = 0; i < mines.length; i++) {
 		pos = [0,0]
 		pos[0] = Math.floor(mines[i]/rows)
 		pos[1] = mines[i]%rows
+		minesLocation.push(pos)
 		gridArr[pos[0]][pos[1]] = -1
 	}
+	console.log(minesLocation)
+	let cells = document.querySelectorAll(".cell")
+	for (let [i,each] of cells.entries()){
+	each.addEventListener("mousedown",function(event) {
+
+		 switch (event.which) {
+        case 1:
+            alert("chappu" + Math.floor(i/14) +i%14)
+            break;
+        case 3:
+            alert("flag" + Math.floor(i/14) +i%14)
+            break;
+    }
+	})
+	// console.log(mines)
 }
-function colorChange(color) {
+
+
+}
+ function colorChange(color) {
 	if(color == "#a7d948" ) return "#8ecc39"
 	return 	"#a7d948"
 }
 function isInMines(pos, mines) {
-	for (var i = 0; i < mines.length; i++) {
-		if (pos == mines[i]) return true		
-	}
+	for (var i = 0; i < mines.length; i++) if (pos == mines[i]) return true
 	return false
 }
 
-function rand(rows,cols) {
-	return  Math.floor(Math.random()*rows*cols)
+function rand(rows,cols){ 
+		 return  Math.floor(Math.random()*rows*cols)
 }
+
 newGame(1)
-sum = 0
-for (var i = 0; i < gridArr.length; i++) {
-	for (var j = 0; j < gridArr[i].length; j++) {
-		if (gridArr[i][j] == -1) {
-			sum++
-		}
-	}
+// sum = 0
+// for (var i = 0; i < gridArr.length; i++) {
+// 	for (var j = 0; j < gridArr[i].length; j++) {
+// 		if (gridArr[i][j] == -1) {
+// 			sum++
+// 		}
+// 	}
+// }
+// console.log(sum)
+
+function assignValues(minesLocation,rows,cols) {
+	 
 }
-console.log(sum)

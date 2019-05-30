@@ -45,7 +45,10 @@ nav div{
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		cursor: pointer;
+		background: white;
 }
+ 
 section{
 		display: flex;
 		flex-direction: column;
