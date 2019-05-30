@@ -28,6 +28,9 @@ function drawGrid(gridArr, difficulty, rows,cols) {
 		for (var j = 0; j < rows; j++) {
 			cells[i*rows + j].style.background = color 
 			color = colorChange(color)
+			// if (gridArr[i][j] == 0) {
+			// 	cells[i*rows + j].style.background ="#d7b899"
+			// }
 		}
 	}
 
@@ -35,19 +38,14 @@ function drawGrid(gridArr, difficulty, rows,cols) {
     item.style.width = 40/(difficulty+1)+10+"px"})
     document.querySelectorAll(".cell").forEach(function(item){
     item.style.height = 40/(difficulty+1)+10+"px"})
-
-    
-
 }
 function newGame(difficulty){
 	gridArr = []
 	let numberOfMines,rows,cols
-	if (difficulty == 0) 	  numberOfMines = 10, rows = 8,  cols = 10
-	else if (difficulty == 1) numberOfMines = 40, rows = 14, cols = 18
-	else 					  numberOfMines = 99, rows = 20, cols = 24
-	drawGrid(difficulty,rows,cols)
-	let mines = []
-	let minesLocation = []
+	if (difficulty == 0) 	   numberOfMines = 10, rows = 8,  cols = 10
+	else if (difficulty == 1)  numberOfMines = 40, rows = 14, cols = 18
+	else 					   numberOfMines = 99, rows = 20, cols = 24
+	let mines = [], minesLocation = []
 	for (let i = 0; i < numberOfMines; i++) {
 		pos = rand(rows,cols)
 		while(isInMines(pos,mines)){
