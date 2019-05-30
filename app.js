@@ -59,24 +59,27 @@ function newGame(difficulty){
 		pos = [0,0]
 		pos[0] = Math.floor(mines[i]/rows)
 		pos[1] = mines[i]%rows
-		minesLocation.push(pos)
-		gridArr[pos[0]][pos[1]] = -1
-	}
-	console.log(minesLocation)
-	let cells = document.querySelectorAll(".cell")
-	for (let [i,each] of cells.entries()){
-	each.addEventListener("mousedown",function(event) {
+		minesLocation.push(pos) 
+	} 
 
-		 switch (event.which) {
+	gridArr = assignValues(gridArr,minesLocation,rows,cols)
+
+	drawGrid(gridArr, difficulty, rows, cols)
+
+	   cells = document.querySelectorAll(".cell")
+
+	for (let [i,each] of cells.entries()){
+
+	each.addEventListener("mousedown",function(event) {
+ 		switch (event.which) {
         case 1:
-            alert("chappu" + Math.floor(i/14) +i%14)
-            break;
+        	uncover(gridArr, rows, cols,Math.floor(i/rows), i%rows ) 
+            break
         case 3:
-            alert("flag" + Math.floor(i/14) +i%14)
-            break;
+            alert("flag" + Math.floor(i/rows) +i%rows)
+            break
     }
-	})
-	// console.log(mines)
+	}) 
 }
 
 
