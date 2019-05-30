@@ -105,6 +105,26 @@ newGame(1)
 // }
 // console.log(sum)
 
-function assignValues(minesLocation,rows,cols) {
-	 
+function assignValues(gridArr,minesLocation,rows,cols) {
+	for (var i = 0; i < cols; i++) {
+		gridArr[i] = []
+		for (var j = 0; j < rows; j++) {
+		gridArr[i][j] = 0
+		}
+	}
+	for (var k = 0; k < minesLocation.length; k++) {
+		let r = minesLocation[k][0]
+		let c = minesLocation[k][1]
+		gridArr[r][c] = -1
+		
+		for (var l = r-1; l <= r+1; l++) {
+ 			for (var m = c-1; m <= c+1; m++) {
+			 	if (l>= 0 && l < cols && m>=0 && m < rows && gridArr[l][m] != -1) {
+			 		gridArr[l][m] +=1
+			 	}
+			}
+		}
+	}
+	return gridArr 	
 }
+
