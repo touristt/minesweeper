@@ -1,50 +1,31 @@
-let gridArr = []
-let cells
-function drawGrid(gridArr, difficulty, rows,cols) {
-	let grid = document.querySelector("#grid")
-	grid.innerHTML = ""
-	for (var i = 0; i < cols; i++) {
-		grid.innerHTML += `<div class="col"></div>` 
-		for (var j = 0; j < rows; j++) { 
-				document.querySelector(`.col:nth-of-type(${i+1})`).innerHTML += `<div class="cell"><p></p></div>`
-			// if (gridArr[i][j] == -1 ) {
-			// 	document.querySelector(`.col:nth-of-type(${i+1})`).innerHTML += `<div class="cell"><p>&#10687</p></div>`
-			// }
-			// else if (gridArr[i][j] == 0) {
-			// 	document.querySelector(`.col:nth-of-type(${i+1})`).innerHTML += `<div class="cell"><p></p></div>`
-				
-			// }
-			// else{
-			// 	colors = ["#2196f3","#9c27b0","#3f51b5","#4caf50","#ff3d00","#ab9900"]
-			// 	document.querySelector(`.col:nth-of-type(${i+1})`).innerHTML += `<div class="cell" style="color:${colors[gridArr[i][j]-1]}"><p>${gridArr[i][j]}</p></div>`
-			// }
-		}
-	}
-	for (var i = 0; i < cols; i++) {
-		let color
-			if (i % 2 == 0) color = "#a7d948"
-			else color = "#8ecc39"	
-		let cells = document.querySelectorAll(".cell")
-		for (var j = 0; j < rows; j++) {
-			cells[i*rows + j].style.background = color 
-			color = colorChange(color)
-			// if (gridArr[i][j] == 0) {
-			// 	cells[i*rows + j].style.background ="#d7b899"
-			// }
-		}
-	}
+let gridArr = [],
+	cells,
+	flags = 0 ,
+	isGameOver = true,
+	totalFlags,
+	isFirstMove,
+	timerId
 
-	document.querySelectorAll(".cell").forEach(function(item){
-    item.style.width = 40/(difficulty+1)+10+"px"})
-    document.querySelectorAll(".cell").forEach(function(item){
-    item.style.height = 40/(difficulty+1)+10+"px"})
+let stats = {
+	best :{},
+	last:[]
 }
+
+
 function newGame(difficulty){
+	clearInterval(timerId)
+	document.querySelector("#timeCount").innerText = "000"
+	isGameOver = false
+	isFirstMove = true
 	gridArr = []
-	let numberOfMines,rows,cols
+	flags = 0 
+	let numberOfMines,rows,cols 
+
 	if (difficulty == 0) 	   numberOfMines = 10, rows = 8,  cols = 10
 	else if (difficulty == 1)  numberOfMines = 40, rows = 14, cols = 18
 	else 					   numberOfMines = 99, rows = 20, cols = 24
+	document.querySelector("#flagCount").innerText = numberOfMines
+	totalFlags = numberOfMines
 	let mines = [], minesLocation = []
 	for (let i = 0; i < numberOfMines; i++) {
 		pos = rand(rows,cols)
