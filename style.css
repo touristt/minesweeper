@@ -57,3 +57,71 @@ section{
 p{
 	font-weight: 800
 }
+#info  {
+		display: flex;
+		flex-direction: row; 
+		justify-content: space-around;
+		margin-top: 20px;
+		align-items: baseline;
+}
+#info  div{
+		display: flex;
+		flex-direction: row;  
+		align-items: baseline;
+		font-size: 30px; 
+}
+
+#difficulty{
+ 
+    border: none;
+    border-radius: 10px;
+    background: #d5cbcb;
+    color: #535353;
+    font-size:18px;
+    padding: 3px;
+    appearance: none; 
+}
+#difficulty:focus{
+	 outline-width: 0;
+}
+#timeCount{ 
+font-variant-numeric: tabular-nums lining-nums;
+}
+#flagCount{ 
+font-variant-numeric: tabular-nums lining-nums;
+}
+.fa-flag{ color: #e91e63 }
+.fa-clock{ color: #2196F3; }
+#gameOver{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+#gameOver div{
+	display: none;
+}
+#gameOver div p:nth-of-type(1){
+	margin-top: 5px;
+	    font-size: 40px;
+    color: #4CAF50;
+}
+#gameOver div p:nth-of-type(2){
+	margin-top: 5px;
+	       font-size: 25px;
+    color: #525252;
+}
+#gameOver div p:nth-of-type(3){
+	margin-top: 5px;
+	       font-size: 25px;
+    color: #525252;
+}
+.playAgain{
+    background: #2196F3;
+    border: none;
+    border-radius: 15%;
+    color: white;
+    font-size: 18px;
+    padding: 7px 16px;
+    cursor: pointer;
+}
