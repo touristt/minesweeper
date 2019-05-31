@@ -129,23 +129,33 @@ function assignValues(gridArr,minesLocation,rows,cols) {
 	return gridArr 	
 }
 
-function uncover(gridArr,rows,cols,x,y) {
-	colors = ["#2196f3","#9c27b0","#3f51b5","#4caf50","#ff3d00","#ab9900","black","red"]
+function uncover(gridArr,rows,cols,x,y, mines) {
+	colors = ["#2196f3","#9c27b0","#3f51b5","#4caf50","#ff3d00","#ab9900","#ff4584","#2e8cff"]
 	let queue = []
 	if (gridArr[x][y] == 0) {
+		
 		gridArr[x][y] = -2
 		cells[x*rows + y].style.background = "#d7b899"  
 		queue.push([x,y])
 	}
 	else if (gridArr[x][y] !== 0 && gridArr[x][y] != -1  && gridArr[x][y] != -2){
 		cells[x*rows + y].innerHTML = `<p style="color:${colors[gridArr[x][y]-1]}">${gridArr[x][y]}</p>`
-
-		cells[x*rows + y].style.background = "#e5c29f"
+ 		cells[x*rows + y].style.background = "#e5c29f"
 
 	}
 	else if(gridArr[x][y] == -1 && gridArr[x][y] != -2){
-		cells[x*rows + y].innerHTML = `<p style="color:red">&#10687</p>`
-		cells[x*rows + y].style.background = "#e5c29f"
+		isGameOver = true
+		let time =  Number(document.querySelector("#timeCount").innerText)
+			clearInterval(timerId)
+			let temp = [10,40,99].indexOf(mines.length)
+			stats.last.push({result : "lost", time: time, difficulty: temp})
+			
+			document.querySelector(".lostTime").innerText = time+" seconds"
+			if (stats.best[temp])  document.querySelector(".bestTimeLost").innerText = stats.best[temp]+" seconds"
+			document.querySelector("#lost").style.display = "block"
+		cells[x*rows + y].innerHTML = `<p style="color:${colors[Math.floor(Math.random()*colors.length)]}"><i class="fas fa-bomb"></i></p>` //&#10687
+		cells[x*rows + y].style.background = "#d7b899"
+		showAll(mines, cells)
 	}
 
 	while(queue.length){
@@ -153,18 +163,103 @@ function uncover(gridArr,rows,cols,x,y) {
 		for (var a = currentCell[0]-1; a <= currentCell[0]+1; a++) {
 		 	for (var b = currentCell[1]-1; b <= currentCell[1]+1; b++) {
 		 		if (a>= 0 && a < cols && b>=0 && b < rows && gridArr[a][b] == 0) {
+		 			
 			 		gridArr[a][b] = -2 
-			 		cells[a*rows + b].style.background = "#d7b899"  
+			 		cells[a*rows + b].style.background = "#d7b899" 
+			 		cells[a*rows + b].innerHTML = "<p></p>" 
 			 		queue.push([a,b])
 			 	}
 			 	if (a>= 0 && a < cols && b>=0 && b < rows && gridArr[a][b] != 0 && gridArr[a][b] != -1  && gridArr[a][b] != -2) {
-			 		
+			 		 
 			 		cells[a*rows + b].style.background = "#e5c29f"
 			 		cells[a*rows + b].innerHTML = `<p style="color:${colors[gridArr[a][b]-1]}">${gridArr[a][b]}</p>`
-			 		//document.querySelector(`.cell:nth-of-type(${b*rows+a+1})`).innerHTML = 
 			 	}
 		 	}
 		}
 	}	
+	refreshFlags()
+	checkWin(cells,mines)
 	return gridArr
 }
+
+
+function showAll(mines, cells) {
+		let i = 0, iterations = mines.length;
+		(function f (){
+    	 cells[mines[i]].innerHTML = `<p style="color:${colors[Math.floor(Math.random()*colors.length)]}"><i class="fas fa-bomb"></i></p>` //&#10687
+	 	 cells[mines[i]].style.background = "#d7b899" 
+   		 i++
+    	if( i < iterations ) setTimeout( f, 2000/mines.length);
+		})()
+}
+
+
+function addFlag(gridArr,rows,cols,x,y) {
+	if (cells[x*rows + y].innerHTML == `<p style="color:#e91e63"><i class="fas fa-flag"></i></p>`) {
+		cells[x*rows + y].innerHTML = "<p></p>"
+		refreshFlags()
+	}
+	else if (gridArr[x][y] != -2 && cells[x*rows + y].style.background !="rgb(229, 194, 159)" ) {
+	 	cells[x*rows + y].innerHTML = `<p style="color:#e91e63"><i class="fas fa-flag"></i></p>`
+	 	refreshFlags()
+	 }  	
+}
+
+
+function checkWin(cells,mines) {
+		count = 0;
+		for (var i = 0; i < cells.length; i++) {
+			if(cells[i].style.background == "rgb(142, 204, 57)" || cells[i].style.background == "rgb(167, 217, 72)" ){
+ 			count++
+ 			}		
+		}
+		if (count == mines.length) {
+			isGameOver = true
+			let time =  Number(document.querySelector("#timeCount").innerText)
+			clearInterval(timerId)
+			let temp = [10,40,99].indexOf(mines.length)
+			stats.last.push({result : "won", time: time, difficulty: temp})
+			
+			if (temp in stats.best) {
+				if(stats.best[temp] > time )  stats.best[temp] = time 
+			}
+			else{
+				 stats.best[temp] = time
+			}
+			document.querySelector(".wonTime").innerText = time+" seconds"
+			document.querySelector(".bestTimeWon").innerText = stats.best[temp]+" seconds"
+			document.querySelector("#won").style.display = "block"
+		}
+		console.log(count)
+ 			
+		
+}
+
+function refreshFlags() {
+	flags = document.querySelectorAll(".cell > p[style='color:#e91e63']").length
+	document.querySelector("#flagCount").innerText = totalFlags - flags
+}
+
+
+function startTimer(sec) {
+	isFirstMove = false
+ 	timerId =  setInterval(function(){
+ 			if(sec<10) text = "00"+sec
+ 			if(sec<100 && sec > 9) text = "0"+sec
+ 			if(sec > 99) text = sec
+           document.querySelector("#timeCount").innerText =text
+           sec++;
+       
+   } , 1000) 
+
+} 
+
+document.querySelectorAll(".playAgain").forEach(function(item) {
+	item.addEventListener("click",function() {
+	document.querySelector("#won").style.display = "none"
+	document.querySelector("#lost").style.display = "none"
+	newGame(document.querySelector("#difficulty").value)
+})
+})
+
+newGame(0)
