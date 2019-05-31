@@ -19,12 +19,53 @@
 				</nav>
 			</header>	
 			<section>
+					<div id="info">
+
+							<div id="flags">
+								<p>
+									<i class="fas fa-flag"></i>&nbsp&nbsp
+								</p>
+								<span id="flagCount"></span>
+							</div>
+
+							<div id="time">
+								<p>
+									<i class="far fa-clock"></i>&nbsp&nbsp
+								</p> 
+								<span id="timeCount"></span>
+							</div>
+							<div> 
+								<select name="difficulty" id="difficulty" onchange="newGame(this.value)">
+									<option value="0">Easy</option>
+									<option value="1">Medium</option>
+									<option value="2">Hard</option>
+								</select>
+							</div>
+						
+					</div>
 					<div id="grid">
+						
+					</div>
+					<div id="gameOver">
+						<div id="won">
+							<p>You Won!</p>
+							<p>Time : <span class="wonTime"></span></p>
+							<p>Best Time : <span class="bestTimeWon"></span></p>
+							<button class="playAgain">Play Again!</button>
+						</div>
+						<div id="lost">
+							<p>You Lost!</p>
+							<p>Time : <span class="lostTime"></span></p>
+							<p>Best Time : <span class="bestTimeLost"></span></p>
+							<button class="playAgain">Play Again!</button>
+						</div>
+					</div>
+					
+					<div id="stats">
 						
 					</div>
 			</section>
 			<footer></footer>
-			
 		</main>
 	</div>
 	<script src="/app.js"></script>
