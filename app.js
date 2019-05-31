@@ -71,40 +71,63 @@ function newGame(difficulty){
 	each.addEventListener("mousedown",function(event) {
  		switch (event.which) {
         case 1:
-        	uncover(gridArr, rows, cols,Math.floor(i/rows), i%rows ) 
+        	if(isFirstMove)   startTimer(1)
+        	if (!isGameOver)  uncover(gridArr, rows, cols,Math.floor(i/rows), i%rows, mines ) 
             break
-        case 3:
-            alert("flag" + Math.floor(i/rows) +i%rows)
-            break
-    }
+    	}
 	}) 
+	each.addEventListener("contextmenu",function(event) {
+		 event.preventDefault()
+		 if (!isGameOver) addFlag(gridArr, rows, cols,Math.floor(i/rows), i%rows) 
+	})
 }
 
 
 }
+
+function drawGrid(gridArr, difficulty, rows,cols) {
+	let grid = document.querySelector("#grid")
+	grid.innerHTML = ""
+	for (var i = 0; i < cols; i++) {
+		grid.innerHTML += `<div class="col"></div>` 
+		for (var j = 0; j < rows; j++) { 
+			document.querySelector(`.col:nth-of-type(${i+1})`).innerHTML += `<div class="cell"><p></p></div>`
+		}
+	}
+	for (var i = 0; i < cols; i++) {
+		let color
+			if (i % 2 == 0) color = "#a7d948"
+			else color = "#8ecc39"	
+		let cells = document.querySelectorAll(".cell")
+		for (var j = 0; j < rows; j++) {
+			cells[i*rows + j].style.background = color 
+			color = colorChange(color) 
+		}
+	}
+
+	document.querySelectorAll(".cell").forEach(function(item){
+    item.style.width = (40/(Number(difficulty)+1))+10+"px"})
+    document.querySelectorAll(".cell").forEach(function(item){
+    item.style.height = (40/(Number(difficulty)+1))+10+"px"})
+    document.querySelector("#info").style.width= (40/(Number(difficulty)+1)+10)*cols+"px"
+}
+
  function colorChange(color) {
 	if(color == "#a7d948" ) return "#8ecc39"
 	return 	"#a7d948"
 }
+
+
 function isInMines(pos, mines) {
 	for (var i = 0; i < mines.length; i++) if (pos == mines[i]) return true
 	return false
 }
 
+
 function rand(rows,cols){ 
 		 return  Math.floor(Math.random()*rows*cols)
 }
 
-newGame(1)
-// sum = 0
-// for (var i = 0; i < gridArr.length; i++) {
-// 	for (var j = 0; j < gridArr[i].length; j++) {
-// 		if (gridArr[i][j] == -1) {
-// 			sum++
-// 		}
-// 	}
-// }
-// console.log(sum)
 
 function assignValues(gridArr,minesLocation,rows,cols) {
 	for (var i = 0; i < cols; i++) {
