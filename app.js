@@ -13,6 +13,8 @@ let stats = {
 
 
 function newGame(difficulty){
+	document.querySelector("#won").style.display = "none"
+	document.querySelector("#lost").style.display = "none"
 	clearInterval(timerId)
 	document.querySelector("#timeCount").innerText = "000"
 	isGameOver = false
@@ -85,14 +87,12 @@ function drawGrid(gridArr, difficulty, rows,cols) {
 			color = colorChange(color) 
 		}
 	}
-
 	document.querySelectorAll(".cell").forEach(function(item){
     item.style.width = (40/(Number(difficulty)+1))+10+"px"})
     document.querySelectorAll(".cell").forEach(function(item){
     item.style.height = (40/(Number(difficulty)+1))+10+"px"})
     document.querySelector("#info").style.width= (40/(Number(difficulty)+1)+10)*cols+"px"
     document.querySelector(".statsHeader").style.width= (40/(Number(difficulty)+1)+10)*cols+"px"
-    document.querySelector("#stats").style.width= (40/(Number(difficulty)+1)+10)*cols+"px"
     document.querySelector("#stats").style.width= (40/(Number(difficulty)+1)+10)*cols+"px"
 }
 
@@ -278,7 +278,7 @@ function setStats() {
 	setRecentStats()
 }
 function setOverallStats() {
-		let eb,mb,hb
+		let eb,mb,hb // b --> best
 	if ("0" in stats.best) { eb = stats.best["0"]}
 		else eb = "-"
 	if ("1" in stats.best) { mb = stats.best["1"]}
