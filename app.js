@@ -163,6 +163,7 @@ function uncover(gridArr,rows,cols,x,y, mines) {
 		cells[x*rows + y].innerHTML = `<p style="color:${colors[Math.floor(Math.random()*colors.length)]}"><i class="fas fa-bomb"></i></p>` //&#10687
 		cells[x*rows + y].style.background = "#d7b899"
 		showAll(mines, cells)
+		setStats()
 	}
 
 	while(queue.length){
@@ -236,6 +237,7 @@ function checkWin(cells,mines) {
 			document.querySelector(".wonTime").innerText = time+" seconds"
 			document.querySelector(".bestTimeWon").innerText = stats.best[temp]+" seconds"
 			document.querySelector("#won").style.display = "block"
+			setStats()
 		}
 		console.log(count)
  			
