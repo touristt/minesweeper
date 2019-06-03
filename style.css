@@ -133,6 +133,7 @@ font-variant-numeric: tabular-nums lining-nums;
 #stats{
 		display: flex;
 		flex-direction: column;
+		margin-bottom: 40px;
 }
  
 #stats div table{
