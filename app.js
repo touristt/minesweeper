@@ -271,4 +271,102 @@ document.querySelectorAll(".playAgain").forEach(function(item) {
 })
 })
 
+function setStats() {
+	document.querySelector("#overall").innerHTML = ""
+	document.querySelector("#recent").innerHTML = ""
+	setOverallStats()
+	setRecentStats()
+}
+function setOverallStats() {
+		let eb,mb,hb
+	if ("0" in stats.best) { eb = stats.best["0"]}
+		else eb = "-"
+	if ("1" in stats.best) { mb = stats.best["1"]}
+		else mb = "-"
+	if ("2" in stats.best) { hb = stats.best["2"]}
+		else hb = "-"
+	let ed = getOverallData(0)		
+	let md = getOverallData(1)		
+	let hd = getOverallData(2)
+	document.querySelector("#overall").innerHTML = `
+		<table>
+								<thead>
+									<th></th>
+									<th>Best</th>
+									<th>Won</th>
+									<th>Lost</th>
+									<th>Won%</th>
+								</thead>
+								<tbody>
+								
+									<tr>
+										<th>Easy</th>
+										<td>${eb} sec</td>
+										<td>${ed[0]}</td>
+										<td>${ed[1]}</td>
+										<td>${ed[2]}%</td>
+									</tr>
+									<tr>
+										<th>Medium</th>
+										<td>${mb} sec</td>
+										<td>${md[0]}</td>
+										<td>${md[1]}</td>
+										<td>${md[2]}%</td>
+									</tr>
+									<tr>
+										<th>Hard</th>
+										<td>${hb} sec</td>
+										<td>${hd[0]}</td>
+										<td>${hd[1]}</td>
+										<td>${hd[2]}%</td>
+									</tr>
+								</tbody>
+							</table>
+	 `		
+
+}
+
+function getOverallData(difficulty) {
+	let wins = 0, losses = 0
+	for (var i = 0; i < stats.last.length; i++) {
+		if (stats.last[i].difficulty == +difficulty) {
+			if(stats.last[i].result == "won") wins++	
+			else losses++	
+		}}
+	if ((wins+losses) == 0) {
+		return [0,0,"-"]
+	}
+	else{
+		return [wins,losses,parseFloat((wins*100)/(wins+losses)).toFixed(2)]
+	}			
+}
+
+function setRecentStats(){
+	document.querySelector("#recent").innerHTML = `
+								<table>
+									<thead>
+										<th>S. No.</th>
+										<th>Difficulty</th>
+										<th>Result</th>
+										<th>Time</th>
+									</thead>
+									<tbody>
+										
+									</tbody>
+								</table>
+						 `
+	let diffs = ["Easy" , "Medium" , "Hard"]					 
+	for (var i = stats.last.length; i >= 1; i--) {
+		document.querySelector("#recent tbody").innerHTML += `
+										<tr>
+											<td>${i}</td>
+											<td>${diffs[stats.last[i-1].difficulty]}</td>
+											<td>${stats.last[i-1].result}</td>
+											<td>${stats.last[i-1].time}</td>
+										</tr>
+		 						` 
+	}					 
+}
+
 newGame(0)
+setStats()
