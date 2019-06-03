@@ -126,3 +126,37 @@ font-variant-numeric: tabular-nums lining-nums;
     padding: 7px 16px;
     cursor: pointer;
 }
+.statsHeader{
+	margin-top: 40px;
+	background:  #4caf50;
+}
+#stats{
+		display: flex;
+		flex-direction: column;
+}
+ 
+#stats div table{
+		width: 100%;
+}
+ 
+h3{
+	background: #4caf50;
+	text-align: center;
+	color: white;
+}
+td,th{ 
+	text-align: center;
+	 background: #e3d3ff;
+    text-align: center;
+    color: black;
+    padding: 5px;
+
+}
+ 
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: none;
+}
