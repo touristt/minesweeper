@@ -91,6 +91,9 @@ function drawGrid(gridArr, difficulty, rows,cols) {
     document.querySelectorAll(".cell").forEach(function(item){
     item.style.height = (40/(Number(difficulty)+1))+10+"px"})
     document.querySelector("#info").style.width= (40/(Number(difficulty)+1)+10)*cols+"px"
+    document.querySelector(".statsHeader").style.width= (40/(Number(difficulty)+1)+10)*cols+"px"
+    document.querySelector("#stats").style.width= (40/(Number(difficulty)+1)+10)*cols+"px"
+    document.querySelector("#stats").style.width= (40/(Number(difficulty)+1)+10)*cols+"px"
 }
 
  function colorChange(color) {
